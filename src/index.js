@@ -1,6 +1,6 @@
 /**
  * @param {*} value value to check
- * @param {string | Object | Array<string | Object>} types types to validate
+ * @param {string | Object | Array<string | Object>} [types] types to validate
  */
 function guard(value, types) {
   if(types == null || Array.isArray(types) && types.length === 0) {
@@ -8,17 +8,20 @@ function guard(value, types) {
   }
 
   const toCheck = [].concat(types);
+  /** 
+   * @todo make this intersection types not union
+   */
   const errorIndex = toCheck.reduce((res, type, idx) => {
     if(res > -1) {
       return res;
     }
 
-    if(typeof type === 'string' && typeof value !== type) {
-      return idx;
+    if(typeof type === 'string') {
+      return typeof value !== type ? idx : res;
     }
 
-    if(!(value instanceof type)) {
-      return idx;
+    if(typeof type === 'object') {
+      return !(value instanceof type) ? idx : res;
     }
 
     return res;
