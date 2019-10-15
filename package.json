@@ -1,0 +1,15 @@
+{
+  "name": "type-guard",
+  "version": "1.0.0",
+  "description": "runtime type guards",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Tom Joseph",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.1"
+  }
+}
