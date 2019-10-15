@@ -8,6 +8,24 @@ function guard(value, types) {
   }
 
   const toCheck = [].concat(types);
+  const valid = toCheck.some(type => {
+    if(typeof type === 'string') {
+      return typeof value === type;
+    }
+
+    if(typeof type === 'object') {
+      return value instanceof type;
+    }
+  });
+
+  if(!valid) {
+    throw new TypeError(`Expected ${value} to match one of ${toCheck.join(', ')}`);
+  }
+}
+
+module.exports = guard;
+
+function unionCheck(value, toCheck) {
   /** 
    * @todo make this intersection types not union
    */
@@ -28,8 +46,6 @@ function guard(value, types) {
   }, -1);
 
   if(errorIndex  > -1) {
-    throw new TypeError(`Expected ${value} to be a ${types[errorIndex]}`);
+    throw new TypeError(`Expected ${value} to be a ${toCheck[errorIndex]}`);
   }
 }
-
-module.exports = guard;
