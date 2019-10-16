@@ -1,6 +1,13 @@
+module.exports = {
+  guard,
+  match,
+  verify
+};
+
 /**
  * @param {*} value value to check
  * @param {string | Object | Array<string | Object>} [types] types to validate
+ * @throws {TypeError}
  */
 function guard(value, types) {
   if(types == null || Array.isArray(types) && types.length === 0) {
@@ -23,12 +30,17 @@ function guard(value, types) {
   }
 }
 
-module.exports = guard;
+/**
+ * @param {*} value value to check
+ * @param {string | Object | Array<string | Object>} [types] types to validate
+ * @throws {TypeError}
+ */
+function match(value, types) {
+  if(types == null || Array.isArray(types) && types.length === 0) {
+    return;
+  }
 
-function unionCheck(value, toCheck) {
-  /** 
-   * @todo make this intersection types not union
-   */
+  const toCheck = [].concat(types);
   const errorIndex = toCheck.reduce((res, type, idx) => {
     if(res > -1) {
       return res;
@@ -48,4 +60,12 @@ function unionCheck(value, toCheck) {
   if(errorIndex  > -1) {
     throw new TypeError(`Expected ${value} to be a ${toCheck[errorIndex]}`);
   }
+}
+
+/**
+ * @param {*} value
+ * @param {object} template
+ */
+function verify(value, template) {
+
 }
