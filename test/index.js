@@ -1,5 +1,5 @@
 const should = require('chai').should();
-const guard = require('../src/index');
+const guard = require('../src/index').guard;
 
 describe('Type Guard', () => {
   it('should be a function', ()=> guard.should.be.a('function'));
